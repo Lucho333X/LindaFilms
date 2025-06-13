@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LINDA FILMS</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    
+    <meta property="og:url" content="https://www.lindafilms.com">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="LINDA FILMS">
+    <meta property="og:description" content="Linda Films is an international production company based in the Canary Islands. Here, tax incentives aren’t the fine print — they’re part of the plan. We connect Europe and Latin America with stories that blend cinema and transmedia narrative without asking for permission.">
+    <meta property="og:image" content="https://www.lindafilms.com/linda-opengraph.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+    
+    <meta property="twitter:domain" content="lindafilms.com">
+    <meta property="twitter:url" content="https://www.lindafilms.com">
+    <meta name="twitter:title" content="LINDA FILMS">
+    <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/images/8e4f3325-09c0-4e05-959d-3bb6098c9d7f.png?token=8Z_-iNMWVDc-aHJ-DIFn-aAGuyLzenUYPdwWcspBHAg&height=1024&width=1024&expires=33285584105">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 300;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #000000;
+            overscroll-behavior: none;
+        }
+
+        .section-heading {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            z-index: 1;
+        }
+        .section-heading:hover {
+            transform: translateX(10px);
+            color: #ffffff;
+        }
+        .section-description {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #d1d5db;
+            max-width: 600px;
+            margin: 0;
+            text-align: left;
+            padding: 0 20px;
+        }
+        .hover-image {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 200px;
+            max-height: 350px;
+            width: 100px;
+            height: 250px;
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            z-index: 4000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+        .png-hover-image {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 300px;
+            max-height: 450px;
+            width: 300px;
+            height: 450px;
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            z-index: 4000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+        .fragil-image {
+            z-index: 5000 !important;
+        }
+        .section-heading:hover .hover-image,
+        .section-heading:hover .png-hover-image {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        header {
+            background-color: #000000;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        .menu-placeholder {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+            font-weight: 200;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .menu-placeholder:hover {
+            transform: scale(1.2);
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 10px;
+        }
+        .menu-placeholder {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .dropdown-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 500px;
+            height: 100vh;
+            background-color: #000000;
+            z-index: 50;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease-in-out;
+        }
+        .dropdown-menu.active {
+            display: block;
+            transform: translateX(0);
+        }
+        .dropdown-menu a {
+            display: block;
+            color: #d1d5db;
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            padding: 20px 0;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .dropdown-menu a:hover {
+            color: #ffffff;
+            transform: translateX(10px);
+        }
+        .close-button {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .close-button:hover {
+            color: #cccccc;
+            transform: rotate(90deg);
+        }
+        .footer-social .social-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin: 0 8px;
+            vertical-align: middle;
+            transition: transform 0.3s ease;
+        }
+        .footer-social .social-icon:hover {
+            transform: rotate(360deg);
+        }
+        .footer-social .social-icon img {
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease;
+        }
+        .footer-social .social-icon:hover img {
+            opacity: 0.7;
+        }
+        .footer-logo {
+            display: block;
+            width: 80px;
+            height: auto;
+            margin-right: 16px;
+            transition: transform 0.3s ease;
+        }
+        .footer-logo:hover {
+            transform: scale(1.1);
+        }
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-right a {
+            margin-left: 16px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .footer-right a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .parallax-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            z-index: -2;
+        }
+        .canary-container {
+            position: fixed;
+            right: 20px;
+            bottom: 310px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s ease;
+            z-index: 1000;
+        }
+        .canary-line {
+            width: 100px;
+            height: 1px;
+            background-color: #ffffff;
+            transition: width 0.5s ease, height 0.5s ease, transform 0.5s ease;
+            transform-origin: right center;
+        }
+        .canary-text {
+            font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+            font-size: 14px;
+            color: #ffffff;
+            margin-left: 10px;
+            white-space: nowrap;
+            transition: transform 0.5s ease, margin 0.5s ease;
+            transform-origin: center;
+        }
+        .canary-container.scrolled {
+            flex-direction: column;
+            align-items: center;
+        }
+        .canary-container.scrolled .canary-line {
+            width: 2px;
+            height: 100px;
+            transform: rotate(0deg);
+        }
+        .canary-container.scrolled .canary-text {
+            transform: rotate(90deg);
+            margin-top: 60px; margin-left: 0;
+        }
+        .search-icon {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+        .search-icon:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+        .search-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #ffffff;
+            stroke-width: 2;
+            fill: none;
+        }
+        .search-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .search-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .search-overlay input {
+            width: 50%;
+            max-width: 600px;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-family: 'Manrope', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #333;
+            border-radius: 4px;
+            outline: none;
+        }
+        .search-overlay input::placeholder {
+            color: #888;
+        }
+        .search-results {
+            width: 50%;
+            max-width: 600px;
+            max-height: 50vh;
+            overflow-y: auto;
+            font-family: 'Manrope', sans-serif;
+            color: #ffffff;
+        }
+        .search-result-item {
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.2s ease;
+        }
+        .search-result-item:hover {
+            background-color: #2a2a2a;
+        }
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        .no-results {
+            padding: 10px;
+            font-size: 1.1rem;
+            color: #888;
+        }
+        .image-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .image-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .image-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .image-overlay .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .image-overlay .close-button:hover {
+            color: #cccccc;
+            transform: rotate(90deg);
+        }
+        @media (max-width: 768px) {
+            body {
+                overscroll-behavior-y: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .dropdown-menu {
+                width: 100%;
+                padding: 16px;
+                overflow-y: auto;
+            }
+            .dropdown-menu a {
+                font-size: 2.5rem;
+                padding: 12px 0;
+            }
+            .close-button {
+                font-size: 14px;
+                top: 12px;
+                right: 12px;
+            }
+            .section-heading {
+                font-size: 2.4rem;
+                line-height: 1.2;
+                margin-bottom: 8px;
+            }
+            .section-description {
+                font-size: 14px;
+                padding: 0 16px;
+            }
+            .hover-image, .png-hover-image {
+                max-width: 150px;
+                max-height: 250px;
+                width: 100%;
+                height: auto;
+            }
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .footer-left, .footer-center, .footer-right {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            .footer-left {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .footer-center {
+                justify-content: center;
+            }
+            .footer-right {
+                justify-content: center;
+                gap: 8px;
+            }
+            .footer-right a {
+                margin-left: 0;
+                font-size: 14px;
+            }
+            .footer-logo {
+                width: 50px;
+                margin-right: 8px;
+            }
+            .footer-social .social-icon {
+                width: 20px;
+                height: 20px;
+                margin: 0 6px;
+            }
+            main {
+                padding-top: 80px;
+            }
+            .parallax-bg {
+                background-attachment: scroll;
+            }
+            .png-hover-image {
+                display: none !important;
+            }
+            .section-heading.active .png-hover-image {
+                display: block !important;
+                opacity: 1;
+            }
+            .canary-container {
+                position: fixed;
+                bottom: 20px;
+                right: 10px;
+                top: auto;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                transition: transform 0.5s ease;
+                transform-origin: bottom right;
+                z-index: 1000;
+            }
+            .canary-line {
+                width: 40px;
+                height: 2px;
+                background-color: #ffffff;
+                transition: all 0.5s ease;
+            }
+            .canary-text {
+                font-family: 'Inter', sans-serif;
+                font-size: 10px;
+                color: #ffffff;
+                white-space: nowrap;
+                transition: all 0.5s ease;
+            }
+            .canary-container.scrolled {
+                transform: rotate(90deg) translate(0, -100%);
+                transform-origin: bottom right;
+            }
+            .canary-container.scrolled .canary-line {
+                width: 2px;
+                height: 30px;
+            }
+            .canary-container.scrolled .canary-text {
+                transform: none;
+                margin: 0;
+            }
+            .search-icon {
+                width: 20px;
+                height: 20px;
+            }
+            .search-overlay input {
+                width: 80%;
+                font-size: 1rem;
+                padding: 8px;
+            }
+            .search-results {
+                width: 80%;
+                max-height: 40vh;
+            }
+            .search-result-item {
+                font-size: 1rem;
+                padding: 8px;
+            }
+            .image-overlay img {
+                max-width: 95%;
+                max-height: 95%;
+            }
+            .image-overlay .close-button {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-300">
+    <div class="canary-container">
+        <div class="canary-line"></div>
+        <span class="canary-text">CANARY ISLANDS</span>
+    </div>
+    <header class="fixed top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <nav>
+                <span class="menu-placeholder">=</span>
+                <img src="logo.png" alt="Logo" class="h-20 w-auto">
+                <span class="search-icon" id="searchIcon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+                    </svg>
+                </span>
+            </nav>
+        </div>
+    </header>
+    <div class="dropdown-menu" id="dropdownMenu">
+        <span class="close-button" id="closeMenu">X</span>
+        <a href="#games">GAMES</a>
+        <a href="#films">FILMS</a>
+        <a href="#team">TEAM</a>
+        <a href="#tax-rebate">TAX REBATE</a>
+    </div>
+    <div class="search-overlay" id="searchOverlay">
+        <input type="text" placeholder="Search projects..." id="searchInput">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    <div class="image-overlay" id="imageOverlay">
+        <span class="close-button" id="imageCloseButton">X</span>
+        <img id="projectImage" src="" alt="Project Image">
+    </div>
+    <main class="pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <section class="mb-16 relative min-h-fit parallax-section" id="main-headings">
+                <div class="parallax-bg" style="background-image: url('background.png');"></div>
+                <div class="relative inline-block cursor-pointer">                
+                    <h1 class="section-heading block w-full text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3" data-image="fragil.jpg">
+                        Fragil<span style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.2em; position: relative; top: -0.4em; margin-left: 0.4em; opacity: 0.8; letter-spacing: 0.02em;">2025</span>
+                    </h1>
+                    <h1 class="section-heading block w-full text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3" data-image="punto_de_quiebre.jpg">
+                        Punto De Quiebre<span style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.2em; position: relative; top: -0.4em; margin-left: 0.4em; opacity: 0.8; letter-spacing: 0.3em;">2026</span>
+                    </h1>
+                    <h1 class="section-heading block w-full text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3" data-image="a_golpe_de_martillo.jpg">
+                        A Golpe De Martillo<span style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.2em; position: relative; top: -0.4em; margin-left: 0.4em; opacity: 0.8; letter-spacing: 0.02em;">2025</span>
+                    </h1>
+                    <h1 class="section-heading block w-full text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3" data-image="rave.jpg">
+                        Rave<span style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.2em; position: relative; top: -0.4em; margin-left: 0.4em; opacity: 0.8; letter-spacing: 0.02em;">2025</span>
+                    </h1>
+                    <h1 class="section-heading block w-full text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3" data-image="mantis.jpg">
+                        Mantis<span style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.2em; position: relative; top: -0.4em; margin-left: 0.4em; opacity: 0.8; letter-spacing: 0.02em;">2026</span>
+                    </h1>
+                </div>
+            </section>
+            <section class="mb-16 flex items-center justify-start min-h-screen relative" id="gif-section">
+                <div class="text-left">
+                    <p class="section-description text-x1">
+                        Linda Films is an international production company based in the Canary Islands. Here, tax incentives aren’t the fine print — they’re part of the plan. We connect Europe and Latin America with stories that blend cinema and transmedia narrative without asking for permission.
+                    </p>
+                </div>
+            </section>
+            <section class="mb-16 flex items-center justify-center min-h-screen relative" id="games">
+                <h1 class="section-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
+                    GAMES
+                    <img src="games.gif" alt="Games Image" class="png-hover-image">
+                </h1>
+            </section>
+            <section class="mb-16 flex items-center justify-center min-h-screen relative" id="films">
+                <h1 class="section-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
+                    FILMS
+                    <img src="films.gif" alt="Films Image" class="png-hover-image">
+                </h1>
+            </section>
+            <section class="mb-16 flex items-center justify-center min-h-screen relative" id="team">
+                <h1 class="section-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
+                    TEAM
+                    <img src="team.gif" alt="Team Image" class="png-hover-image">
+                </h1>
+            </section>
+            <section class="mb-16 flex items-center justify-center min-h-screen relative" id="tax-rebate">
+                <h1 class="section-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
+                    TAX REBATE
+                    <img src="tax_rebate.gif" alt="Tax Rebate Image" class="png-hover-image">
+                </h1>
+            </section>
+        </div>
+    </main>
+    <footer class="bg-black py-6">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="footer-container">
+                <div class="footer-left">
+                    <img src="logo.png" alt="LINDAFILMS Logo" class="footer-logo">
+                    <p class="text-sm">© 2025 LINDAFILMS. All rights reserved.</p>
+                </div>
+                <div class="footer-center">
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/lindafilms" class="social-icon" target="_blank">
+                            <img src="your_instagram_logo.png" alt="Instagram Logo">
+                        </a>
+                        <a href="https://www.linkedin.com/company/linda-films" class="social-icon" target="_blank">
+                            <img src="your_linkedin_logo.png" alt="LinkedIn Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="text-sm hover:underline">Privacy Policy</a>
+                    <a href="#" class="text-sm hover:underline">Terms of Use</a>
+                    <a href="#" class="text-sm hover:underline">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        function hideAllImages() {
+            document.querySelectorAll('.section-heading').forEach(heading => {
+                if (!heading.classList.contains('active')) {
+                    const image = heading.querySelector('.hover-image, .png-hover-image');
+                    if (image) {
+                        image.style.display = 'none';
+                        image.style.opacity = '0';
+                    }
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            hideAllImages();
+            updateCanaryPosition();
+        });
+        function updateParallax() {
+            const firstSection = document.querySelector('.parallax-section');
+            if (firstSection && !isMobile) {
+                const rect = firstSection.getBoundingClientRect();
+                const scrollY = window.pageYOffset;
+                const offset = rect.top + scrollY;
+                const parallaxBg = firstSection.querySelector('.parallax-bg');
+                if (parallaxBg) {
+                    const speed = 0.3;
+                    const xPos = -(scrollY - offset) * speed;
+                    parallaxBg.style.transform = `translateX(${xPos}px)`;
+                }
+            }
+        }
+        function updateCanaryPosition() {
+            const canaryContainer = document.querySelector('.canary-container');
+            const targetTitle = Array.from(document.querySelectorAll('#main-headings .section-heading'))
+                .find(heading => heading.textContent.trim().includes('PUNTO DE QUIEBRE'));
+            if (targetTitle && !isMobile) {
+                const rect = targetTitle.getBoundingClientRect();
+                const scrollY = window.pageYOffset;
+                const titleCenter = rect.top + scrollY + (rect.height / 2);
+                canaryContainer.style.top = `${titleCenter}px`;
+                canaryContainer.style.transform = 'none';
+            }
+        }
+        function updateCanaryIndicator() {
+            const canaryContainer = document.querySelector('.canary-container');
+            if (window.scrollY > 50) {
+                canaryContainer.classList.add('scrolled');
+            } else {
+                canaryContainer.classList.remove('scrolled');
+            }
+        }
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > lastScrollTop) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+            hideAllImages();
+            updateParallax();
+            if (!isMobile) {
+                updateCanaryPosition();
+            }
+            updateCanaryIndicator();
+        });
+        window.addEventListener('resize', () => {
+            if (!isMobile) {
+                updateCanaryPosition();
+            }
+        });
+        updateParallax();
+        updateCanaryIndicator();
+        const menuPlaceholder = document.querySelector('.menu-placeholder');
+        const dropdownMenu = document.querySelector('#dropdownMenu');
+        const closeMenu = document.querySelector('#closeMenu');
+        const searchIcon = document.querySelector('#searchIcon');
+        const searchOverlay = document.querySelector('#searchOverlay');
+        const searchInput = document.querySelector('#searchInput');
+        const searchResults = document.querySelector('#searchResults');
+        const imageOverlay = document.querySelector('#imageOverlay');
+        const imageCloseButton = document.querySelector('#imageCloseButton');
+        const projectImage = document.querySelector('#projectImage');
+        if (menuPlaceholder && dropdownMenu) {
+            menuPlaceholder.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('active');
+                searchOverlay.classList.remove('active');
+                imageOverlay.classList.remove('active');
+            });
+        }
+        if (closeMenu && dropdownMenu) {
+            closeMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdownMenu.classList.remove('active');
+            });
+        }
+        if (searchIcon && searchOverlay) {
+            searchIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                searchOverlay.classList.toggle('active');
+                dropdownMenu.classList.remove('active');
+                imageOverlay.classList.remove('active');
+                if (searchOverlay.classList.contains('active')) {
+                    searchInput.focus();
+                    searchInput.value = '';
+                    searchResults.innerHTML = '';
+                }
+            });
+            searchOverlay.addEventListener('mouseleave', () => {
+                searchOverlay.classList.remove('active');
+            });
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
+                    searchOverlay.classList.remove('active');
+                }
+            });
+        }
+        if (searchInput && searchResults) {
+            const projects = Array.from(document.querySelectorAll('#main-headings .section-heading')).map(heading => ({
+                text: heading.textContent.split('202')[0].trim(),
+                element: heading
+            }));
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                searchResults.innerHTML = '';
+                if (query === '') {
+                    return;
+                }
+                const matches = projects.filter(project => project.text.toLowerCase().includes(query));
+                if (matches.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                    return;
+                }
+                matches.forEach(match => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.textContent = match.text;
+                    resultItem.addEventListener('click', () => {
+                        const rect = match.element.getBoundingClientRect();
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        const offsetTop = rect.top + scrollTop - 128;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                        searchOverlay.classList.remove('active');
+                    });
+                    searchResults.appendChild(resultItem);
+                });
+            });
+        }
+        if (imageOverlay && imageCloseButton && projectImage) {
+            document.querySelectorAll('#main-headings .section-heading').forEach(heading => {
+                heading.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const imageSrc = heading.getAttribute('data-image');
+                    if (imageSrc) {
+                        projectImage.src = imageSrc;
+                        imageOverlay.classList.add('active');
+                        dropdownMenu.classList.remove('active');
+                        searchOverlay.classList.remove('active');
+                    }
+                });
+            });
+            imageOverlay.addEventListener('click', (e) => {
+                if (e.target === imageOverlay || e.target === imageCloseButton) {
+                    imageOverlay.classList.remove('active');
+                }
+            });
+        }
+        document.addEventListener('click', (e) => {
+            if (!dropdownMenu.contains(e.target) && !menuPlaceholder.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+            if (!searchOverlay.contains(e.target) && !searchIcon.contains(e.target)) {
+                searchOverlay.classList.remove('active');
+            }
+            if (!imageOverlay.contains(e.target) && !e.target.closest('#main-headings .section-heading')) {
+                imageOverlay.classList.remove('active');
+            }
+        });
+        document.querySelectorAll('.dropdown-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const rect = targetElement.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const offsetTop = rect.top + scrollTop - 128;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+        });
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            const image = heading.querySelector('.hover-image, .png-hover-image');
+            if (!image) return;
+            if (isMobile) {
+                heading.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    hideAllImages();
+                    this.classList.add('active');
+                    image.style.display = 'block';
+                    image.style.opacity = '1';
+                }, { passive: false });
+                heading.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('active');
+                    image.style.display = 'none';
+                    image.style.opacity = '0';
+                }, { passive: true });
+                heading.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+            } else {
+                heading.addEventListener('mouseenter', function() {
+                    hideAllImages();
+                    this.classList.add('active');
+                    image.style.display = 'block';
+                    image.style.opacity = '1';
+                });
+                heading.addEventListener('mouseleave', function() {
+                    this.classList.remove('active');
+                    image.style.display = 'none';
+                    image.style.opacity = '0';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
